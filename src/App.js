@@ -1,5 +1,5 @@
 import React from "react";
-import Quiz from "./components/Quiz";
+import QuizLogic from "./components/QuizLogic";
 import Start from "./components/Start";
 
 function App() {
@@ -9,29 +9,40 @@ function App() {
     setStart(!start);
   }
 
-  const [quiz, setQuiz] = React.useState({
-    data: null,
-  });
+  // const [quizData, setQuizData] = useState([]);
 
-  React.useEffect(() => {
-    fetch(
-      "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        const { response_code, results } = json;
-        setQuiz({
-          data: results,
-        });
-        console.log(quiz);
-      });
-  }, []);
+  // const url =
+  //   "https://opentdb.com/api.php?amount=3&category=21&difficulty=easy&type=multiple";
 
-  const { data } = quiz;
+  // useEffect(() => {
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setQuizData(data.results);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+  // console.log(quizData);
+
+  // const card = quizData.map((item) => {
+  //   return (
+  //     <>
+  //       <Quiz
+  //         question={item.question}
+  //         answer={item.correct_answer}
+  //         incorrect={item.incorrect_answers}
+  //         key={item.index}
+  //       />
+
+  //     </>
+  //   );
+  // });
 
   return (
     <main className="main-page">
-      {start ? <Quiz quizData={data} /> : <Start start={startQuiz} />}
+      {start ? <QuizLogic /> : <Start start={startQuiz} />}
     </main>
   );
 }

@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Quiz({ quizData }) {
-  //   const quizQuestion = quizData;
-  //   const { question, correct_answer } = quizQuestion;
+function Quiz({ handleAnswer, data: { question, correct_answer, answers } }) {
+  //   const [selectedAnswer, setSelectedAnswer] = useState();
+
+  //   const optionClicked = [];
+
+  //   function onAnswerClick(event) {
+  //     const playerAnswer = event.target.innerHTML;
+  //     setSelectedAnswer(playerAnswer);
+  //     console.log(selectedAnswer);
+  // if (playerAnswer === answer) {
+  //   console.log("correct");
+  // } else {
+  //   console.log("incorrect");
+  // }
+  //   }
+
   return (
     <main className="quiz-page">
       <div className="quiz-container">
-        <h2>{}</h2>
+        <h2 dangerouslySetInnerHTML={{ __html: question }} />
         <div className="options">
-          <button>Quiz</button>
-          <button>Quiz</button>
-          <button>Quiz</button>
-          <button>Quiz</button>
+          {answers.map((answer, i) => {
+            return (
+              <button
+                key={i}
+                className=" options-btn"
+                onClick={() => handleAnswer(answer)}
+                dangerouslySetInnerHTML={{ __html: answer }}
+              />
+            );
+          })}
         </div>
-      </div>
-      <div className="answers">
-        <button>Check Answers</button>
       </div>
     </main>
   );
