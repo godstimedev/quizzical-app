@@ -8,11 +8,13 @@ function QuizLogic() {
   const [answers, setAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [showAnswers, setShowAnswers] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
 
   const url =
     "https://opentdb.com/api.php?amount=5&category=21&difficulty=medium&type=multiple";
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(url)
       .then((res) => {
@@ -28,6 +30,7 @@ function QuizLogic() {
             selected: "",
           }))
         );
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -78,19 +81,23 @@ function QuizLogic() {
     setShowAnswers(true);
   }
 
-  return quizData.length > 0 ? (
+  return (
     <>
-      <div className="quiz">{quizElements}</div>
+      {isloading ? (
+        <div className="load">Loading...</div>
+      ) : (
+        <>
+          <div className="quiz">{quizElements}</div>
 
-      <div className="check-answers">
-        {showAnswers && <h3>You scored {score}/5 correct answers </h3>}
-        <button onClick={checkAnswers}>
-          {!showAnswers ? "Check answers" : "Play Again"}
-        </button>
-      </div>
+          <div className="check-answers">
+            {showAnswers && <h3>You scored {score}/5 correct answers </h3>}
+            <button onClick={checkAnswers}>
+              {!showAnswers ? "Check answers" : "Play Again"}
+            </button>
+          </div>
+        </>
+      )}
     </>
-  ) : (
-    <div className="load">Loading...</div>
   );
 }
 
