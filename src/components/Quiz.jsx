@@ -1,38 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Quiz({ handleAnswer, data: { question, correct_answer, answers } }) {
-  //   const [selectedAnswer, setSelectedAnswer] = useState();
+function Quiz({
+  onClick,
+  showAnswers,
+  choices,
+  question,
+  correct_answer,
+  selected,
+  id,
+}) {
+  const answerElements = choices.map((item) => {
+    let className = "options-btn";
+    if (item === selected) {
+      className += " selected";
+    }
+    if (showAnswers) {
+      if (item === selected && item !== correct_answer) {
+        className += " wrong-answer";
+      } else if (item === correct_answer) {
+        className += " correct";
+      } else {
+        className += " not-correct";
+      }
+    }
 
-  //   const optionClicked = [];
-
-  //   function onAnswerClick(event) {
-  //     const playerAnswer = event.target.innerHTML;
-  //     setSelectedAnswer(playerAnswer);
-  //     console.log(selectedAnswer);
-  // if (playerAnswer === answer) {
-  //   console.log("correct");
-  // } else {
-  //   console.log("incorrect");
-  // }
-  //   }
+    return (
+      <button
+        onClick={() => onClick(id, item)}
+        key={item}
+        className={className}
+        dangerouslySetInnerHTML={{ __html: item }}
+      />
+    );
+  });
 
   return (
     <main className="quiz-page">
       <div className="quiz-container">
         <h2 dangerouslySetInnerHTML={{ __html: question }} />
-        <div className="options">
-          {answers.map((answer, i) => {
-            return (
-              <button
-                key={i}
-                className=" options-btn"
-                onClick={() => handleAnswer(answer)}
-                dangerouslySetInnerHTML={{ __html: answer }}
-              />
-            );
-          })}
-        </div>
+        <div className="options">{answerElements}</div>
       </div>
+      <hr className="divider" />
     </main>
   );
 }
