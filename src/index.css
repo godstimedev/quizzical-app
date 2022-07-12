@@ -65,7 +65,7 @@ button {
   border-radius: 7.94px;
   min-width: 4rem;
   min-height: 25px;
-  padding: 0 1rem;
+  padding: 0rem 0.5rem;
   text-align: center;
   cursor: pointer;
   font-weight: 600;
